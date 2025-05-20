@@ -106,7 +106,7 @@ def generate_date():
 @st.cache_data
 def load_data():
     data = []
-    num_rows = 500_000  #  adjust as needed
+    num_rows = 10_000  #  adjust as needed
 
     for _ in range(num_rows):
         country = random.choices(
