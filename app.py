@@ -15,32 +15,6 @@ fake = Faker()
 # --- Streamlit Config ---
 st.set_page_config(page_title="Company Sales Dashboard", layout="wide", initial_sidebar_state="expanded")
 
-# --- Admin Login ---
-def login():
-    st.markdown("<h2 style='text-align: center;'>Administration Login</h2>", unsafe_allow_html=True)
-    
-    col1, col2, col3 = st.columns([2, 1, 2])
-    with col2:
-        st.markdown("###")
-        st.markdown("###")
-        username = st.text_input("Username", key="username", label_visibility="collapsed", placeholder="Username")
-        password = st.text_input("Password", type="password", key="password", label_visibility="collapsed", placeholder="Password")
-        
-        if st.button("Login", use_container_width=True):
-            if username == "Bi81nh" and password == "Bida21@0031":
-                st.session_state["logged_in"] = True
-                st.success("Logged in successfully!")
-                st.rerun()
-            else:
-                st.error("Invalid credentials. Please try again.")
-
-# Check login status
-if "logged_in" not in st.session_state:
-    st.session_state["logged_in"] = False
-
-if not st.session_state["logged_in"]:
-    login()
-    st.stop()
 
 # --- Data Generation Functions ---
 def get_continent(country_name):
@@ -132,7 +106,7 @@ def generate_date():
 @st.cache_data
 def load_data():
     data = []
-    num_rows = 10000  # Reduced for performance; adjust as needed
+    num_rows = 1_000_000  #  adjust as needed
 
     for _ in range(num_rows):
         country = random.choices(
@@ -311,10 +285,6 @@ st.sidebar.download_button("Download CSV", convert_csv(filtered), "filtered.csv"
 # --- Compute Metrics ---
 completed = filtered[filtered['Sale Status'].str.lower() == 'completed']
 
-# Logout
-if st.sidebar.button("Logout"):
-    st.session_state.logged_in = False
-    st.rerun()
 
 # --- Custom CSS ---
 st.markdown(
